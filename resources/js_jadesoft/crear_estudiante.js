@@ -75,7 +75,7 @@ $(function() {
 
                 $.ajax({
                     type: "POST",
-                    url: "controler/controlador_estudiante1.php",
+                    url: "controler/controlador_estudiante.php",
                     data: parametros,
                     dataType: "json",
                     error: function() {
@@ -123,7 +123,7 @@ $(function() {
                 alertify.set({delay: 1500});
                 $.ajax({
                     type: "POST",
-                    url: "controler/controlador_estudiante1.php",
+                    url: "controler/controlador_estudiante.php",
                     data: parametros,
                     dataType: "json",
                     error: function() {
@@ -164,7 +164,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "controler/controlador_estudiante1.php",
+            url: "controler/controlador_estudiante.php",
             data: parametros,
             dataType: "json",
             error: function() {

@@ -1,6 +1,6 @@
 <?php require_once("./component/header.php"); ?>
 
-<script src="resources/js_jadesoft/crear_estudiante1.js"></script>	
+<script src="resources/js_jadesoft/crear_estudiante.js"></script>	
 
 <div id="content" class="left_content">
     <table>
