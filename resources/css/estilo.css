@@ -1,0 +1,96 @@
+
+.ui-menu { 
+    width: 170px;
+    font-size: 7px;
+}
+
+.wrapper {
+    width: 960px;
+    margin: 5px auto;
+}
+
+#top {
+    position: relative;
+    background-color: #036fab;
+    color: white;
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+}
+
+#bottom {
+    position: bottom;
+    background-color: #036fab;
+    padding: 5px;
+    margin: 0px 0px 0px 0px;
+}
+
+#left {
+    float: left;
+    padding: 5px;
+    width: 200px;
+}
+
+#right {
+    float: right;
+    background-color: #ece3a5;
+    padding: 5px;
+    width: 150px;
+}
+
+.center_content {
+    position: relative;
+    background-color: #dddddd;
+    padding: 5px;
+}
+
+.left_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin-left: 200px;
+    height: 300px;
+}
+
+.right_content {
+    background-color: #dddddd;
+    padding: 5px;
+    margin: 0px 170px 0px 170px;
+}
+
+#top a:link, #top a:visited {
+    color: white;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+#top a:link:hover, #top a:visited:hover  {
+    color: black;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+
+#tablaEstudiante tr:hover {
+    background-color: #ccc;
+}
+
+#tablaEstudiante td:hover {
+    cursor: pointer;
+}
+
+
+#tabla_estudiante tr:hover {
+    background-color: #ccc;
+}
+
+#tabla_estudiante td:hover {
+    cursor: pointer;
+}
+
+.form-input {
+    
+}
+
+.alertify-logs {
+    top: 10px;
+    right: 10px;
+}
