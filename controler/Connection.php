@@ -15,14 +15,14 @@ class Connection {
        // $this->server = 'mysql:host=localhost;dbname=oxiris_biblioteca';
        // $this->user = 'oxiris_bibli';
       //  $this->password = 'biblioteca';
-        $this->server = 'mysql:host=localhost;dbname=$idAutor';
+        $this->server = 'mysql:host=localhost;dbname=biblioteca';
         $this->user = 'root';
         $this->password = 'higher';
 
         $structure = new NotORM_Structure_Convention(
-                $primary = "id_%s", // id_$table
+                $primary = "id_%s", // id_$tableitebc
                 $foreign = "id_%s", // id_$table
-                $table = "%ss", // {$table}s
+                $table = "%ss", // {$table}se
                 $prefix = "" // wp_$table
         );
 
