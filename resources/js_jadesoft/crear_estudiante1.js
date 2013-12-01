@@ -1,26 +1,33 @@
-function alerta() {
+    function seleccionar(idEstudiante) {
 
-//        var table = document.getElementById("tableId");
-//        var rows = table.getElementsByTagName("tr");
-//        for (i = 0; i < rows.length; i++) {
-//            var currentRow = table.rows[i];
-//            var createClickHandler =
-//                    function(row)
-//                    {
-//                        return function() {
-//                            var cell = row.getElementsByTagName("td")[0];
-//                            var id = cell.innerHTML;
-//                            alert("id:" + id);
-//                        };
-//                    };
-//
-//            currentRow.onclick = createClickHandler(currentRow);
-//        }
-    
-}
+        var parametros = {
+            "id_estudiante": idEstudiante, 
+            "buscarId": true};
+
+        $.ajax({
+            type: "POST",
+            url: "controler/controlador_estudiante.php",
+            data: parametros,
+            dataType: "json",
+            error: function() {
+                alert("error peticion ajax");
+            },
+            success: function(data) {
+                
+                $('input[name="accion"]').val("actualizar");
+                $('input[name="matricula"]').val(data.matricula);
+                $('input[name="nombre"]').val(data.nombre);
+                $('input[name="apellido"]').val(data.apellido);
+                $('input[name="id_estudiante"]').val(idEstudiante);
+                $('input:radio[name="habilitado"][value="' + data.estado + '"]').prop('checked', true);
+
+                $('#borrar').removeAttr("disabled").removeClass('ui-state-disabled');
+                $("#dialog").dialog("close");
+            }
+        });
+    }
 
 $(function() {
-
 
     $("#dialog").dialog({
         autoOpen: false,
@@ -45,14 +52,13 @@ $(function() {
             .button()
             .click(function() {
 
+                alertify.set({delay: 1500});
                 if ($("#matricula").val().length < 1) {
-                    alertify.set({delay: 1500});
                     alertify.error("La matricula esta vacia");
                     return false;
                 }
 
                 if ($("#nombre").val().length < 1) {
-                    alertify.set({delay: 1500});
                     alertify.error("El nombre esta vacio");
                     return false;
                 }
@@ -72,15 +78,10 @@ $(function() {
                     url: "controler/controlador_estudiante1.php",
                     data: parametros,
                     dataType: "json",
-                    beforeSend: function() {
-                    },
                     error: function() {
-                        alertify.set({delay: 1500});
                         alertify.error("Error al enviar la peticion");
                     },
                     success: function(data) {
-                        //  alert(data);
-                        alertify.set({delay: 1500});
                         if (data.estatus) {
                             alertify.success("Registro Guardado Exitosamente");
                         } else {
@@ -102,7 +103,6 @@ $(function() {
                 $('#form_estudiante')[0].reset();
                 $('#id_estudiante').val("0");
                 $('#borrar').attr('disabled', 'disabled').addClass('ui-state-disabled');
-
             });
 
 
@@ -119,20 +119,18 @@ $(function() {
                     "accion": $('#accion').val(),
                     "id_estudiante": $('#id_estudiante').val()
                 };
-
+                
+                alertify.set({delay: 1500});
                 $.ajax({
                     type: "POST",
                     url: "controler/controlador_estudiante1.php",
                     data: parametros,
                     dataType: "json",
-                    beforeSend: function() {
-                    },
                     error: function() {
-                        alertify.set({delay: 1500});
+                       
                         alertify.error("Error al enviar la peticion");
                     },
                     success: function(data) {
-                        alertify.set({delay: 1500});
                         if (data.estatus) {
                             alertify.success("Registro eliminado");
                         } else {
@@ -150,50 +148,6 @@ $(function() {
                 return false;
 
             });
-
-
-
-    $('#tabla_estudiante tr').click(function(event) {
-
-        var idEstudiante;
-
-        idEstudiante = $(this).attr('id');
-
-        alert(idEstudiante);
-
-        var parametros = {"id_estudiante": idEstudiante, "buscarId": true};
-
-        $.ajax({
-            type: "POST",
-            url: "controler/controlador_estudiante.php",
-            data: parametros,
-            dataType: "json",
-            beforeSend: function() {
-                //$("#resultado").html( "ho hay data");
-
-            },
-            error: function() {
-                alert("error peticion ajax");
-            },
-            success: function(data) {
-                //	alert(data);
-                //            var obj = $.parseJSON(data);
-
-                //	alert(obj.matricula);
-                $('input[name="accion"]').val("actualizar");
-
-                $('input[name="matricula"]').val(data.matricula);
-                $('input[name="nombre"]').val(data.nombre);
-                $('input[name="apellido"]').val(data.apellido);
-                $('input[name="id_estudiante"]').val(idEstudiante);
-
-                $('input:radio[name="habilitado"][value="' + data.estado + '"]').prop('checked', true);
-
-                $('#borrar').removeAttr("disabled").removeClass('ui-state-disabled');
-                $("#dialog").dialog("close");
-            }
-        });
-    });
 });
 
 $(document).ready(function() {
@@ -223,7 +177,7 @@ $(document).ready(function() {
                 var html = "";
 
                 $.each(data, function(key) {
-                    html += "<tr id=" + data[key].id_estudiante + ">";
+                    html += "<tr id=" + data[key].id_estudiante + " onClick='seleccionar(" + data[key].id_estudiante + ")'>";
                     html += " <td> " + data[key].matricula + "</td>";
                     html += " <td>" + data[key].nombre + "</td>";
                     html += "  <td>" + data[key].apellido + "</td>";
@@ -231,18 +185,7 @@ $(document).ready(function() {
                 });
 
                 $('#tabla_estudiante > tbody').append(html);
-                
-//                var numero =1;
-//                 $('#tabla_estudiante > tbody > tr').each(function (index) {
-//                     
-//                     alert(numero);
-//                     numero++;
-//                 });
-     
             }
         });
     });
-
 });
-
-

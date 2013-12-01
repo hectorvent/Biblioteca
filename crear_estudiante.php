@@ -1,6 +1,6 @@
 <?php require_once("./component/header.php"); ?>
 
-<script src="resources/js_jadesoft/crear_estudiante.js"></script>	
+<script src="resources/js_jadesoft/crear_estudiante1.js"></script>	
 
 <div id="content" class="left_content">
     <table>
@@ -50,7 +50,22 @@
     <div id="dialog" title="Lista de Estudiantes">
         <div id="estudiante-contain" class="ui-widget">
             <input type="text" id="busqueda" />
-            <div id="resultado"></div>
+            <div id="resultado">
+                <table id='tabla_estudiante' class='ui-widget ui-widget-content'>
+                    <thead>
+                        <tr class='ui-widget-header '>
+                            <th width="30">Matricula</th>
+                            <th width="100">Nombre</th>
+                            <th width="90">Apellido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+
+            </div>
         </div>
     </div>
 

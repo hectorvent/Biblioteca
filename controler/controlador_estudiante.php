@@ -69,7 +69,6 @@ if (isset($_POST['guardar'])) {
     }
 }
 
-
 if (isset($_POST['borrar']) && isset($_POST['id_estudiante'])) {
 
     $idEstudiante = $_POST['id_estudiante'];
@@ -88,106 +87,38 @@ if (isset($_POST['borrar']) && isset($_POST['id_estudiante'])) {
     echo json_encode($json_arr);
 }
 
-
-
 if (isset($_POST['buscar'])) {
-    ?>
 
-    <script>
-    
-//////////////////// del Controlador_estudiante.php
+    $datos = $_POST['datos'];
+    $books = $library->estudiante()->where("CONCAT(matricula, estudiante_nombre, estudiante_apellido) LIKE ?", "%$datos%")->limit(10);
 
-$('#tablaEstudiante tr').click(function(event) {
+    $array = array();
+    foreach ($books as $est) {
+        $array[] = array(
+            "id_estudiante" => $est['id_estudiante'],
+            "nombre" => $est['estudiante_nombre'],
+            "apellido" => $est['estudiante_apellido'],
+            "matricula" => $est['matricula'],
+            "estado" => $est['estudiante_activo']
+        );
+    }
 
-    var idEstudiante;
+    echo json_encode($array);
+}
 
-    //obtenemos el texto introducido en el campo de busqueda
-    idEstudiante = $(this).attr('id');
+if (isset($_POST['buscarId'])) {
 
-    //hace la b�squeda
-    var parametros = {"id_estudiante": idEstudiante, "buscarId": true};
+    $idEstudiante = $_POST['id_estudiante'];
 
-    $.ajax({
-        type: "POST",
-        url: "controler/controlador_estudiante.php",
-        data: parametros,
-        dataType: "json",
-        beforeSend: function() {
-            //$("#resultado").html( "ho hay data");
+    $est = $library->estudiante[$idEstudiante];
 
-        },
-        error: function() {
-            alert("error peticion ajax");
-        },
-        success: function(data) {
-            //	alert(data);
-//            var obj = $.parseJSON(data);
+    $json_arr = array(
+        "nombre" => $est['estudiante_nombre'],
+        "apellido" => $est['estudiante_apellido'],
+        "matricula" => $est['matricula'],
+        "estado" => $est['estudiante_activo'],
+        "email" => $est['estudiante_activo']
+    );
 
-            //	alert(obj.matricula);
-            $('input[name="accion"]').val("actualizar");
-
-            $('input[name="matricula"]').val(data.matricula);
-            $('input[name="nombre"]').val(data.nombre);
-            $('input[name="apellido"]').val(data.apellido);
-            $('input[name="id_estudiante"]').val(idEstudiante);
-
-            $('input:radio[name="habilitado"][value="' + data.estado + '"]').prop('checked', true);
-            //                        if (obj.estado === 1) {
-            //                            $('input:radio[name="habilitado"][value="1"]').prop('checked', true);
-            //                        } else {
-            //                            $('input:radio[name="habilitado"][value="0"]').prop('checked', true);
-            //                        }
-
-            $('#borrar').removeAttr("disabled").removeClass('ui-state-disabled');
-            $("#dialog").dialog("close");
-
-        }
-    });
-
-});
-
-    
-    </script>
-
-    <table id='tablaEstudiante' class='ui-widget ui-widget-content'>
-        <thead>
-            <tr class='ui-widget-header '>
-                <th width="30">Matricula</th>
-                <th width="50">Nombre</th>
-                <th width="50">Apellido</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            <?php
-
-            $datos = $_POST['datos'];
-
-            $books = $library->estudiante()->where("CONCAT(matricula, estudiante_nombre, estudiante_apellido) LIKE ?", "%$datos%")->limit(10, 0);
-
-            foreach ($books as $book) {
-                echo "<tr id=" . $book["id_estudiante"] . ">";
-                echo " <td> " . $book["matricula"] . "</td> <td>" . $book["estudiante_nombre"] . "</td> <td>" . $book["estudiante_apellido"];
-                echo "	</tr>";
-            }
-
-            echo "</tbody></table>";
-        }
-
-        if (isset($_POST['buscarId'])) {
-
-            $idEstudiante = $_POST['id_estudiante'];
-
-            $est = $library->estudiante[$idEstudiante];
-
-
-            $json_arr = array(
-                "nombre" => $est['estudiante_nombre'],
-                "apellido" => $est['estudiante_apellido'],
-                "matricula" => $est['matricula'],
-                "estado" => $est['estudiante_activo'],
-                "email" => $est['estudiante_activo']
-            );
-
-            echo json_encode($json_arr);
-        }
+    echo json_encode($json_arr);
+}
