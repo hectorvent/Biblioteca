@@ -15,9 +15,9 @@ class Connection {
        // $this->server = 'mysql:host=localhost;dbname=oxiris_biblioteca';
        // $this->user = 'oxiris_bibli';
       //  $this->password = 'biblioteca';
-        $this->server = 'mysql:host=localhost;dbname=biblioteca';
+        $this->server = 'mysql:host=localhost;dbname=$idAutor';
         $this->user = 'root';
-        $this->password = 'quisquella';
+        $this->password = 'higher';
 
         $structure = new NotORM_Structure_Convention(
                 $primary = "id_%s", // id_$table
