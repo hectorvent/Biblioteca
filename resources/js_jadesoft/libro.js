@@ -138,7 +138,7 @@ $(function() {
                     "sub_titulo": $('#sub_titulo').val(),
                     "resumen": $('#resumen').val(),
                     "clasificacion": $('#id_editora').val(),
-                    "imagen": $('#imagen').val(),
+//                    "imagen": $('#imagen').val(),
                     "autor": $('#id_autor').val(),
                     "genero": $('#id_genero').val(),
                     "editora": $('#id_editora').val(),
@@ -155,16 +155,17 @@ $(function() {
                     type: "POST",
                     url: "controler/controlador_libro.php",
                     data: parametros,
-                    dataType: "json",
+                    dataType: "html",
                     error: function() {
                         alertify.error("Error al enviar la peticion");
                     },
                     success: function(data) {
-                        if (data.estatus) {
-                            alertify.success("Registro Guardado Exitosamente");
-                        } else {
-                            alertify.error("Error al Intentar salvar el registro");
-                        }
+                        alert(data);
+//                        if (data.estatus) {
+//                            alertify.success("Registro Guardado Exitosamente");
+//                        } else {
+//                            alertify.error("Error al Intentar salvar el registro");
+//                        }
                     }
                 });
 

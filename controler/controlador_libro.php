@@ -11,7 +11,7 @@ if (isset($_POST['guardar'])) {
     $titulo = $_POST['titulo'];
     $sub_titulo = $_POST['sub_titulo'];
     $resumen = $_POST['resumen'];
-    $imagen = $_POST['imagen'];
+//    $imagen = $_POST['imagen'];
     $clasificacion = $_POST['clasificacion'];
     $autor = $_POST['autor'];
     $genero = $_POST['genero'];
@@ -19,25 +19,26 @@ if (isset($_POST['guardar'])) {
     $cantidad = $_POST['cantidad'];
     $cantidad_disponible = $_POST['cantidad_disponible'];
     $permitir_salir = $_POST['permitir_salir'];
+    
 
     if ($_POST['accion'] == "guardar") {
 
         $data = array(
             "ISBN" => $isbn,
             "titulo" => $titulo,
-            "sub_titulo" => $sub_titulo,
+            "subtitulo" => $sub_titulo,
             "resumen" => $resumen,
-            "imagen" => $imagen,
-            "id_clasificacion" => $clasificacion,
-            "id_autor" => $autor,
-            "id_genero" => $genero,
-            "id_editora" => $editora,
-            "cantidad" => $cantidad,
-            "cantidad_disponible" => $cantidad_disponible,
-            "permitir_salir" => $permitir_salir
+//            "imagen" => $imagen,
+            "id_clasificacion" =>  intval($clasificacion),
+            "id_autor" => intval($autor),
+            "id_genero" =>  intval($genero),
+            "id_editora" =>  intval($editora),
+            "cantidad" =>  intval($cantidad),
+            "cantidad_disponible" =>  intval($cantidad_disponible)
+//            "permitir_salir" => $permitir_salir
         );
 
-//        echo json_encode($data);
+        echo json_encode($data);
         $libro = $library->libro();
         $result = $libro->insert($data);
 

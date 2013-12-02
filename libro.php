@@ -69,24 +69,24 @@
                 </td>
             </tr>
             <tr>   
-            <input type="hidden" name="id_autor" value="0" id="id_autor" />
-            <td> Autor
+            
+            <td> <input type="hidden" name="id_autor" value="0" id="id_autor" /> Autor
             </td> 
             <td><input  class="form-input" type="text" name="autor" id="autor" readonly="readonly">
                 <img id="consultar_autor" src="resources/imagenes/zoom_20.png" alt="Buscar Autor" />
             </td>
             </tr>
             <tr>     
-            <input type="hidden" name="id_genero" value="0" id="id_genero" />
-            <td> Genero
+           
+            <td>  <input type="hidden" name="id_genero" value="0" id="id_genero" />Genero
             </td> 
             <td><input  class="form-input" type="text" name="genero" id="genero" readonly="readonly">
                 <img id="consultar_genero" src="resources/imagenes/zoom_20.png" alt="Buscar Genero" />
             </td>
             </tr>
             <tr>     
-            <input type="hidden" name="id_editora" value="0" id="id_editora" />
-            <td> Editora
+            
+            <td> <input type="hidden" name="id_editora" value="0" id="id_editora" />Editora
             </td> 
             <td><input  class="form-input" type="text" name="editora" id="editora" readonly="readonly">
                 <img id="consultar_editora" src="resources/imagenes/zoom_20.png" alt="Buscar Editora" />

@@ -7,101 +7,68 @@ $library = $conexion->getLibrary();
 
 if (isset($_POST['guardar'])) {
 
-    $guardar = $_POST['guardar'];
-    $descripcion = $_POST['descripcion'];
+    $idEstudiante = $_POST['id_estudiante'];
+    $fecha = new DateTime($_POST['fecha']);
+    $fechaEntregar = new DateTime($_POST['fecha_entregar']);
+    $salida = $_POST['salida'];
     $libros = $_POST['libros'];
 
-    $json_arr = array (
-    "guardar" => $guardar,
-    "descripcion" => $descripcion,
-    "libros" => $libros
+
+    $data = array(
+        "id_estudiante" => $idEstudiante,
+        "fecha" => date_format($fecha, 'Y-m-d'),
+        "fecha_entregar" => date_format($fechaEntregar, 'Y-m-d')
     );
 
+    $prestamo = $library->prestamo();
+    $result = $prestamo->insert($data);
 
-//    $nombre = $_POST['nombre'];
-//    $matricula = $_POST['matricula'];
-//    $apellido = $_POST['apellido'];
-//    $estado = $_POST['habilitado'];
-//
-//    if ($_POST['accion'] == "guardar") {
-//
-//        $data = array(
-//            "estudiante_nombre" => $nombre,
-//            "estudiante_apellido" => $apellido,
-//            "matricula" => $matricula,
-//            "estudiante_activo" => $estado,
-//            "puntuacion" => 0
-//        );
-//
-////        echo json_encode($data);
-//        $estudiante = $library->estudiante();
-//        $result = $estudiante->insert($data);
-//
-//
-//        $json_arr = array(
-//            "estatus" => false
-//        );
-//
-//        if (isset($result)) {
-//            $json_arr = array(
-//                "estatus" => true
-//            );
-//        }
-
-        echo json_encode($json_arr);
-//    } else {
-//        $idEstudiante = $_POST['id_estudiante'];
-//
-//        $estudiante = $library->estudiante[$idEstudiante];
-//
-//        if ($estudiante) {
-//
-//            $data = array(
-//                "estudiante_nombre" => $nombre,
-//                "estudiante_apellido" => $apellido,
-//                "matricula" => $matricula,
-//                "estudiante_activo" => $estado
-//            );
-//
-//            $result = $estudiante->update($data);
-//
-//            $json_arr = array(
-//                "estatus" => false
-//            );
-//
-//            if ($result == 1) {
-//                $json_arr = array(
-//                    "estatus" => true
-//                );
-//            }
-//
-//            echo json_encode($json_arr);
-//        }
-//    }
-}
-
-if (isset($_POST['borrar']) && isset($_POST['id_estudiante'])) {
-
-    $idEstudiante = $_POST['id_estudiante'];
-    $estudiante = $library->estudiante[$idEstudiante];
 
     $json_arr = array(
-        "estatus" => false
+        "estatus" => true
     );
 
-    if ($estudiante && $estudiante->delete()) {
+    if (!isset($result)) {
         $json_arr = array(
-            "estatus" => true
+            "estatus" => false
         );
+    }
+
+    $libr = json_decode($libros, true);
+
+    $libross = $libr['libros'];
+
+    $prestamod = $library->prestamo_detalle();
+
+    foreach ($libross as $value) {
+
+        $data1 = array(
+            "id_prestamo" => $result,
+            "id_libro" => $value
+        );
+
+        $result = $prestamod->insert($data1);
+
+        if (!isset($result)) {
+            $json_arr = array(
+                "estatus" => false
+            );
+        }
     }
 
     echo json_encode($json_arr);
 }
 
-if (isset($_POST['buscar'])) {
+if (isset($_POST['buscarPorEstudiante'])) {
 
-    $datos = $_POST['datos'];
-    $books = $library->libro()->where("CONCAT(ISBN, titulo) LIKE ?", "%$datos%")->limit(10);
+    $datos = $_POST['id_estudiante'];
+
+    $query = "select id_prestamo_detalle, l.titulo, a.autor_nombre, l.ISBN "
+            . "from prestamo p, prestamo_detalle pd, autor a, libro l "
+            . "where p.id_prestamo = pd.id_prestamo AND pd.id_libro = l.id_libro AND "
+            . "l.id_autor = a.id_autor";
+
+    $books = $conexion->query($query);
 
     $array = array();
     foreach ($books as $est) {
@@ -109,32 +76,12 @@ if (isset($_POST['buscar'])) {
             "id_libro" => $est['id_libro'],
             "titulo" => $est['titulo'],
             "isbn" => $est['ISBN'],
-            "subtitulo" => $est['subtitulo'],
-            "resumen" => $est['resumen']
+            "autor" => $est['autor_nombre'],
+            "id_prestamo_detalle"
         );
     }
 
     echo json_encode($array);
 }
 
-if (isset($_POST['buscarId'])) {
 
-    $idLibro = $_POST['id_libro'];
-
-    $est = $library->libro[$idLibro];
-
-    $autor = $library->autor[$est['id_autor']];
-
-    $json_arr = array(
-        "id_libro" => $est['id_libro'],
-        "titulo" => $est['titulo'],
-        "isbn" => $est['ISBN'],
-        "subtitulo" => $est['subtitulo'],
-        "resumen" => $est['resumen'],
-        "autor" => $autor['autor_nombre']
-    );
-
-    // $est['id_autor']//
-
-    echo json_encode($json_arr);
-}

@@ -1,7 +1,3 @@
-function replaceToUpper(key, value) {
-    return value.toString().toUpperCase();
-}
-
 function reset() {
     alertify.set({
         labels: {
@@ -14,50 +10,12 @@ function reset() {
     });
 }
 
-
-function quitarLibro(idLibro) {
-
-//    reset();
-//    alertify.confirm("Desea remover este libro", function(e) {
-//        if (e) {
-    $(idLibro).remove();
-    alertify.success("Libro removido");
-//        }
-//    });
-}
-
-function seleccionarLibro(idLibro) {
-
-    var parametros = {
-        "id_libro": idLibro,
-        "buscarId": true};
-
-    $.ajax({
-        type: "POST",
-        url: "controler/controlador_libro.php",
-        data: parametros,
-        dataType: "json",
-        error: function() {
-            alert("error peticion ajax");
-        },
-        success: function(data) {
-            $('input[name="id_libro"]').val(idLibro);
-            $('input[name="titulo_libro"]').val(data.titulo);
-            $('input[name="autor_libro"]').val(data.autor);
-
-            $("#dialog_libro").dialog("close");
-            $('#agregar_libro').removeAttr("disabled").removeClass('ui-state-disabled');
-        }
-    });
-}
-
-
-
 function seleccionarEstudiante(idEstudiante) {
 
     var parametros = {
         "id_estudiante": idEstudiante,
-        "buscarId": true};
+        "buscarId": true
+    };
 
     $.ajax({
         type: "POST",
@@ -73,26 +31,46 @@ function seleccionarEstudiante(idEstudiante) {
             $('input[name="id_estudiante"]').val(idEstudiante);
 
             $("#dialog_estudiante").dialog("close");
+
+            //////////////////////////////////////
+
+            var parametros = {
+                "id_estudiante": idEstudiante,
+                "buscarPorEstudiante": true
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "controler/controlador_prestamo.php",
+                data: parametros,
+                dataType: "json",
+                error: function() {
+                    alert("error peticion ajax");
+                },
+                success: function(data) {
+                    $('input[name="nombre_estudiante"]').val(data.nombre);
+                    $('input[name="apellido"]').val(data.apellido);
+                    $('input[name="id_estudiante"]').val(idEstudiante);
+
+                    $("#dialog_estudiante").dialog("close");
+
+                }
+            });
+            /////////////////////////////////////
+
+
+
+
         }
     });
 }
 
 $(function() {
 
-
-    $("#fecha").datepicker();
-    $("#fecha_entrega").datepicker();
-
     $("#consultar_estudiante")
             .button()
             .click(function() {
                 $("#dialog_estudiante").dialog("open");
-            });
-
-    $("#consultar_libro")
-            .button()
-            .click(function() {
-                $("#dialog_libro").dialog("open");
             });
 
     $("#agregar_libro")
@@ -119,20 +97,6 @@ $(function() {
 
                 $('#agregar_libro').attr('disabled', 'disabled').addClass('ui-state-disabled');
             });
-
-
-    $("#dialog_libro").dialog({
-        autoOpen: false,
-        resizable: false,
-        height: 500,
-        width: 500,
-        modal: true,
-        buttons: {
-            Cancel: function() {
-                $(this).dialog("close");
-            }
-        }
-    });
 
     $("#dialog_estudiante").dialog({
         autoOpen: false,
@@ -206,101 +170,14 @@ $(function() {
             .click(function() {
                 $('#form_prestamo')[0].reset();
                 $('#id_estudianrte').val("0");
-                $('#agregar_libro').attr('disabled', 'disabled').addClass('ui-state-disabled');
-
                 $("#tabla_prestamo > tbody").empty();
-                //  $('#borrar').attr('disabled', 'disabled').addClass('ui-state-disabled');
             });
 
-
-    $("#borrar")
-            .button()
-            .click(function() {
-
-                if ($('#id_genero').val() === "0") {
-                    return false;
-                }
-
-                var parametros = {
-                    "borrar": true,
-                    "accion": $('#accion').val(),
-                    "id_genero": $('#id_genero').val()
-                };
-
-                alertify.set({delay: 1500});
-                $.ajax({
-                    type: "POST",
-                    url: "controler/controlador_genero.php",
-                    data: parametros,
-                    dataType: "json",
-                    error: function() {
-                        alertify.error("Error al enviar la peticion");
-                    },
-                    success: function(data) {
-                        if (data.estatus) {
-                            alertify.success("Registro eliminado");
-                        } else {
-                            alertify.error("Error al eliminar registro o el registro se esta utilizando");
-                        }
-                    }
-                });
-
-                $('#accion').val("guardar");
-                $('#id_genero').val("0");
-                $('#form_genero')[0].reset();
-
-                $('#borrar').attr('disabled', 'disabled').addClass('ui-state-disabled');
-
-                return false;
-
-            });
 });
 
 $(document).ready(function() {
 
-
-    $('#agregar_libro').attr('disabled', 'disabled').addClass('ui-state-disabled');
-
     var consulta;
-
-    $("#busqueda_libro").focus();
-    $("#busqueda_libro").keyup(function(e) {
-
-        consulta = $("#busqueda_libro").val();
-
-        var parametros = {
-            "datos": consulta,
-            "buscar": true
-        };
-
-        $.ajax({
-            type: "POST",
-            url: "controler/controlador_libro.php",
-            data: parametros,
-            dataType: "json",
-            error: function() {
-                alert("error peticion ajax");
-            },
-            success: function(data) {
-
-                $("#tabla_libro > tbody").empty();
-
-                var html = "";
-
-                $.each(data, function(key) {
-                    html += "<tr id=" + data[key].id_libro + " onClick='seleccionarLibro(" + data[key].id_libro + ")'>";
-                    html += " <td> " + data[key].isbn + "</td>";
-                    html += " <td> " + data[key].titulo + "</td>";
-                    html += " </tr>";
-
-                });
-
-                $('#tabla_libro > tbody').append(html);
-            }
-        });
-    });
-
-
 
     $("#busqueda_estudiante").focus();
     $("#busqueda_estudiante").keyup(function(e) {
