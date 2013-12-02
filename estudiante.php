@@ -1,23 +1,23 @@
 <?php require_once("./component/header.php"); ?>
 
-<script src="resources/js_jadesoft/genero.js"></script>	
+<script src="resources/js_jadesoft/estudiante.js"></script>	
 
 <div id="content" class="left_content">
     <table>
-        <tr><th>CREAR GENERO DE LIBROS</th></tr>
+        <tr><th>CREAR ESTUDIANTE</th></tr>
 
     </table>
 
 
-    <form id="form_genero" name="form_genero" >
-        <input type="hidden" name="id_genero" value="0" id="id_genero" />
+    <form id="form_estudiante" name="form_estudiante" >
+        <input type="hidden" name="id_estudiante" value="0" id="id_estudiante" />
         <input type="hidden" name="accion" value="guardar" id="accion" />
         <table>
 
             <tr> 
-                <td> Descripcion </td> 
-                <td><input class="form-input" type="text" name="descripcion" id="descripcion"> 
-                    <img id="consultar_genero" src="resources/imagenes/zoom_30.png" alt="Consulta Estudiante"/></td>
+                <td> Matricula </td> 
+                <td><input class="form-input" type="text" name="matricula" id="matricula"> 
+                    <img id="consultar_estudiante" src="resources/imagenes/zoom_30.png" alt="Consulta Estudiante"/></td>
                 <td rowspan="4"> <!--input class="form-btn" type="reset" name="limpiar" value="limpiar" id="resetiar"--> 
                     <img id="nuevo" src="resources/imagenes/document_orientation_portrait_60.png" alt="Nuevo Estudiante" /><br/>
                     <img id="guardar" src="resources/imagenes/diskette_60.png" alt="Crear Estudiante" /><br/>
@@ -26,18 +26,19 @@
 
             </tr>
             <tr> 
-                <td></td> 
-                <td> </td>
+                <td> Nombre </td> 
+                <td><input class="form-input" type="text" name="nombre" id="nombre"> </td>
 
             </tr>
             <tr> 
-                <td>  </td> <td>
-                </td>
+                <td> Apellido </td> <td>
+                    <input class="form-input" type="text" name="apellido" id="apellido"> </td>
 
             </tr>
             <tr> 
-                <td>  </td> 
-                <td>
+                <td> Estado </td> 
+                <td><input type="radio" name="habilitado" value="1" checked> ACTIVO<br>
+                    <input type="radio" name="habilitado" value="0" > INACTIVO<br>
                 </td>
 
             </tr>
@@ -46,14 +47,16 @@
     </form>          
 
 
-    <div id="dialog" title="Lista de Genero de Libros">
-        <div id="genero-contain" class="ui-widget">
+    <div id="dialog" title="Lista de Estudiantes">
+        <div id="estudiante-contain" class="ui-widget">
             <input type="text" id="busqueda" />
             <div id="resultado">
-                <table id='tabla_genero' class='ui-widget ui-widget-content tabla_consulta'>
+                <table id='tabla_estudiante' class='ui-widget ui-widget-content'>
                     <thead>
                         <tr class='ui-widget-header '>
-                            <th width="100">Descripcion</th>
+                            <th width="150">Matricula</th>
+                            <th width="300">Nombre</th>
+                            <th width="300">Apellido</th>
                         </tr>
                     </thead>
                     <tbody>

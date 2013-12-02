@@ -33,18 +33,18 @@
                 <div id="left">
                     <ul id="menu">
                         <li class="ui-state-disabled"><a href="#">INICIO</a></li>
-                        <li><a href="registrar_prestamo.php">Prestamo de Libros</a></li>
+                        <li><a href="prestamo.php">Prestamo de Libros</a></li>
                         <li><a href="registrar_reseccion.php">Recepcion Prestamo</a></li>
-                        <li><a href="ajuste_libros.php">Ajuste de Libros Existentes</a></li>
+                        <li><a href="ajuste_libros.php">Ajuste Existencia</a></li>
                         <li>
                             <a href="#">Administracion</a>
                             <ul>
                                 <!--li class="ui-state-disabled"><a href="#">Ada</a></li-->
-                                <li><a href="crear_estudiante.php">Estudiante</a></li>
-                                <li><a href="crear_autor.php">Autor</a></li>
-                                <li><a href="crear_genero.php">Genero</a></li>
-                                <li><a href="crear_clasificacion.php">Categoria</a></li>
-                                <li><a href="crear_editora.php">Editora</a></li>
+                                <li><a href="estudiante.php">Estudiante</a></li>
+                                <li><a href="autor.php">Autor</a></li>
+                                <li><a href="genero.php">Genero</a></li>
+                                <li><a href="clasificacion.php">Categoria</a></li>
+                                <li><a href="editora.php">Editora</a></li>
                             </ul>
                         </li>
                         <li>

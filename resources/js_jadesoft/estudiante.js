@@ -32,8 +32,8 @@ $(function() {
     $("#dialog").dialog({
         autoOpen: false,
         resizable: false,
-        height: 500,
-        width: 400,
+        height: 530,
+        width: 600,
         modal: true,
         buttons: {
             Cancel: function() {

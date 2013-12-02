@@ -1,29 +1,28 @@
-function seleccionar(idEditora) {
+    function seleccionar(idClasificacion) {
 
-    var parametros = {
-        "id_editora": idEditora,
-        "buscarId": true};
+        var parametros = {
+            "id_clasificacion": idClasificacion, 
+            "buscarId": true};
 
-    $.ajax({
-        type: "POST",
-        url: "controler/controlador_editora.php",
-        data: parametros,
-        dataType: "json",
-        error: function() {
-            alert("error peticion ajax");
-        },
-        success: function(data) {
+        $.ajax({
+            type: "POST",
+            url: "controler/controlador_clasificacion.php",
+            data: parametros,
+            dataType: "json",
+            error: function() {
+                alert("error peticion ajax");
+            },
+            success: function(data) {
+                
+                $('input[name="accion"]').val("actualizar");
+                $('input[name="descripcion"]').val(data.descripcion);
+                $('input[name="id_clasificacion"]').val(idClasificacion);
 
-            $('input[name="accion"]').val("actualizar");
-            $('input[name="descripcion"]').val(data.descripcion);
-            $('input[name="direccion"]').val(data.direccion);
-            $('input[name="id_editora"]').val(idEditora);
-
-            $('#borrar').removeAttr("disabled").removeClass('ui-state-disabled');
-            $("#dialog").dialog("close");
-        }
-    });
-}
+                $('#borrar').removeAttr("disabled").removeClass('ui-state-disabled');
+                $("#dialog").dialog("close");
+            }
+        });
+    }
 
 $(function() {
 
@@ -40,7 +39,7 @@ $(function() {
         }
     });
 
-    $("#consultar_editora")
+    $("#consultar_clasificacion")
             .button()
             .click(function() {
                 $("#dialog").dialog("open");
@@ -50,27 +49,22 @@ $(function() {
             .button()
             .click(function() {
 
+                alertify.set({delay: 1500});
                 if ($("#descripcion").val().length < 1) {
-                    alertify.error("La descripcion esta vacio");
-                    return false;
-                }
-
-                if ($("#direccion").val().length < 1) {
-                    alertify.error("La direccion esta vacio");
+                    alertify.error("La descripcion esta vacia");
                     return false;
                 }
 
                 var parametros = {
-                    "editora_descripcion": $('#descripcion').val(),
-                    "editora_direccion": $('#direccion').val(),
+                    "descripcion": $('#descripcion').val(),
                     "guardar": $('#guardar').val(),
                     "accion": $('#accion').val(),
-                    "id_editora": $('#id_editora').val()
+                    "id_clasificacion": $('#id_clasificacion').val()
                 };
 
                 $.ajax({
                     type: "POST",
-                    url: "controler/controlador_editora.php",
+                    url: "controler/controlador_clasificacion.php",
                     data: parametros,
                     dataType: "json",
                     error: function() {
@@ -86,7 +80,7 @@ $(function() {
                 });
 
                 $('#accion').val("guardar");
-                $('#form_editora')[0].reset();
+                $('#form_clasificacion')[0].reset();
                 $('#borrar').attr('disabled', 'disabled').addClass('ui-state-disabled');
 
                 return false;
@@ -95,8 +89,8 @@ $(function() {
     $("#nuevo")
             .button()
             .click(function() {
-                $('#form_editora')[0].reset();
-                $('#id_editora').val("0");
+                $('#form_clasificacion')[0].reset();
+                $('#id_clasificacion').val("0");
                 $('#borrar').attr('disabled', 'disabled').addClass('ui-state-disabled');
             });
 
@@ -105,24 +99,24 @@ $(function() {
             .button()
             .click(function() {
 
-                if ($('#id_editora').val() === "0") {
+                if ($('#id_clasificacion').val() === "0") {
                     return false;
                 }
 
                 var parametros = {
                     "borrar": true,
                     "accion": $('#accion').val(),
-                    "id_editora": $('#id_editora').val()
+                    "id_clasificacion": $('#id_clasificacion').val()
                 };
-
+                
                 alertify.set({delay: 1500});
                 $.ajax({
                     type: "POST",
-                    url: "controler/controlador_editora.php",
+                    url: "controler/controlador_clasificacion.php",
                     data: parametros,
                     dataType: "json",
                     error: function() {
-
+                       
                         alertify.error("Error al enviar la peticion");
                     },
                     success: function(data) {
@@ -135,8 +129,8 @@ $(function() {
                 });
 
                 $('#accion').val("guardar");
-                $('#id_editora').val("0");
-                $('#form_editora')[0].reset();
+                $('#id_clasificacion').val("0");
+                $('#form_clasificacion')[0].reset();
 
                 $('#borrar').attr('disabled', 'disabled').addClass('ui-state-disabled');
 
@@ -159,7 +153,7 @@ $(document).ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "controler/controlador_editora.php",
+            url: "controler/controlador_clasificacion.php",
             data: parametros,
             dataType: "json",
             error: function() {
@@ -167,18 +161,19 @@ $(document).ready(function() {
             },
             success: function(data) {
 
-                $("#tabla_editora > tbody").empty();
+                $("#tabla_clasificacion > tbody").empty();
 
                 var html = "";
 
                 $.each(data, function(key) {
-                    html += "<tr id=" + data[key].id_editora + " onClick='seleccionar(" + data[key].id_editora + ")'>";
-                    html += " <td>" + data[key].descripcion + "</td>";
-                    html += " <td>" + data[key].direccion + "</td>";
+                    html += "<tr id=" + data[key].id_clasificacion + " onClick='seleccionar(" + data[key].id_clasificacion + ")'>";
+                    html += " <td> " + data[key].descripcion + "</td>";
+//                    html += " <td>" + data[key].nombre + "</td>";
+//                    html += "  <td>" + data[key].apellido + "</td>";
                     html += " </tr>";
                 });
 
-                $('#tabla_editora > tbody').append(html);
+                $('#tabla_clasificacion > tbody').append(html);
             }
         });
     });

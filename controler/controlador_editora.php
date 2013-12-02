@@ -15,13 +15,10 @@ if (isset($_POST['guardar'])) {
         $data = array(
             "editora_descripcion" => $descripcion,
             "editora_direccion" => $direccion
-                //     "puntuacion" => 0
         );
 
-//        echo json_encode($data);
         $editora = $library->editora();
         $result = $editora->insert($data);
-
 
         $json_arr = array(
             "estatus" => false
@@ -35,9 +32,13 @@ if (isset($_POST['guardar'])) {
 
         echo json_encode($json_arr);
     } else {
-        $idGenero = $_POST['id_editora'];
+        $idEditota = $_POST['id_editora'];
 
-        $editora = $library->editora[$idGenero];
+        $editora = $library->editora[$idEditota];
+
+        $json_arr = array(
+            "estatus" => false
+        );
 
         if ($editora) {
 
@@ -48,18 +49,14 @@ if (isset($_POST['guardar'])) {
 
             $result = $editora->update($data);
 
-            $json_arr = array(
-                "estatus" => false
-            );
-
             if ($result == 1) {
                 $json_arr = array(
                     "estatus" => true
                 );
             }
-
-            echo json_encode($json_arr);
         }
+
+        echo json_encode($json_arr);
     }
 }
 

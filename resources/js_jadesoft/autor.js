@@ -16,7 +16,7 @@
                 
                 $('input[name="accion"]').val("actualizar");                
                 $('input[name="nombre"]').val(data.nombre);
-                $('input[name="id_autor"]').val(id_autor);               
+                $('input[name="id_autor"]').val(idAutor);               
 
                 $('#borrar').removeAttr("disabled").removeClass('ui-state-disabled');
                 $("#dialog").dialog("close");

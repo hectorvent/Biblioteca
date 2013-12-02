@@ -14,9 +14,9 @@
             },
             success: function(data) {
                 
-                $('input[name="accion"]').val("actualizar");                
+                $('input[name="accion"]').val("actualizar");
                 $('input[name="descripcion"]').val(data.descripcion);
-                $('input[name="id_genero"]').val(id_genero);               
+                $('input[name="id_genero"]').val(idGenero);
 
                 $('#borrar').removeAttr("disabled").removeClass('ui-state-disabled');
                 $("#dialog").dialog("close");
@@ -48,9 +48,10 @@ $(function() {
     $("#guardar")
             .button()
             .click(function() {
-                
+
+                alertify.set({delay: 1500});
                 if ($("#descripcion").val().length < 1) {
-                    alertify.error("La descripcion esta vacio");
+                    alertify.error("La descripcion esta vacia");
                     return false;
                 }
 
@@ -144,7 +145,7 @@ $(document).ready(function() {
     $('#borrar').attr('disabled', 'disabled').addClass('ui-state-disabled');
 
 
-    $("#busqueda").focus();     
+    $("#busqueda").focus();
     $("#busqueda").keyup(function(e) {
 
         consulta = $("#busqueda").val();
@@ -165,8 +166,10 @@ $(document).ready(function() {
                 var html = "";
 
                 $.each(data, function(key) {
-                    html += "<tr id=" + data[key].id_genero + " onClick='seleccionar(" + data[key].id_genero + ")'>";                     
-                    html += " <td>" + data[key].descripcion + "</td>";     
+                    html += "<tr id=" + data[key].id_genero + " onClick='seleccionar(" + data[key].id_genero + ")'>";
+                    html += " <td> " + data[key].descripcion + "</td>";
+//                    html += " <td>" + data[key].nombre + "</td>";
+//                    html += "  <td>" + data[key].apellido + "</td>";
                     html += " </tr>";
                 });
 

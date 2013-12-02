@@ -13,13 +13,10 @@ if (isset($_POST['guardar'])) {
 
         $data = array(
             "descripcion" => $descripcion
-       //     "puntuacion" => 0
         );
 
-//        echo json_encode($data);
         $genero = $library->genero();
         $result = $genero->insert($data);
-
 
         $json_arr = array(
             "estatus" => false
@@ -33,9 +30,9 @@ if (isset($_POST['guardar'])) {
 
         echo json_encode($json_arr);
     } else {
-        $idGenero = $_POST['id_genero'];
+        $idClasificacion = $_POST['id_genero'];
 
-        $genero = $library->genero[$idGenero];
+        $genero = $library->genero[$idClasificacion];
 
         if ($genero) {
 
@@ -62,8 +59,8 @@ if (isset($_POST['guardar'])) {
 
 if (isset($_POST['borrar']) && isset($_POST['id_genero'])) {
 
-    $idGenero = $_POST['id_genero'];
-    $genero = $library->genero[$idGenero];
+    $idClasificacion = $_POST['id_genero'];
+    $genero = $library->genero[$idClasificacion];
 
     $json_arr = array(
         "estatus" => false
@@ -81,13 +78,13 @@ if (isset($_POST['borrar']) && isset($_POST['id_genero'])) {
 if (isset($_POST['buscar'])) {
 
     $datos = $_POST['datos'];
-    $books = $library->genero()->where("CONCAT(descripcion) LIKE ?", "%$datos%")->limit(10);
+    $generoes = $library->genero()->where("descripcion LIKE ?", "%$datos%")->limit(10);
 
     $array = array();
-    foreach ($books as $est) {
+    foreach ($generoes as $genero) {
         $array[] = array(
-            "id_genero" => $est['id_genero'],
-            "descripcion" => $est['descripcion']
+            "id_genero" => $genero['id_genero'],
+            "descripcion" => $genero['descripcion']
         );
     }
 
@@ -96,12 +93,13 @@ if (isset($_POST['buscar'])) {
 
 if (isset($_POST['buscarId'])) {
 
-    $idGenero = $_POST['id_genero'];
+    $idClasificacion = $_POST['id_genero'];
 
-    $est = $library->genero[$idGenero];
+    $cla = $library->genero[$idClasificacion];
 
     $json_arr = array(
-        "descripcion" => $est['descripcion']
+        "id_genero" => $cla['id_genero'],
+        "descripcion" => $cla['descripcion']
     );
 
     echo json_encode($json_arr);

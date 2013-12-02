@@ -90,16 +90,16 @@ if (isset($_POST['borrar']) && isset($_POST['id_estudiante'])) {
 if (isset($_POST['buscar'])) {
 
     $datos = $_POST['datos'];
-    $books = $library->estudiante()->where("CONCAT(matricula, estudiante_nombre, estudiante_apellido) LIKE ?", "%$datos%")->limit(14);
+    $books = $library->libro()->where("CONCAT(ISBN, titulo) LIKE ?", "%$datos%")->limit(10);
 
     $array = array();
     foreach ($books as $est) {
         $array[] = array(
-            "id_estudiante" => $est['id_estudiante'],
-            "nombre" => $est['estudiante_nombre'],
-            "apellido" => $est['estudiante_apellido'],
-            "matricula" => $est['matricula'],
-            "estado" => $est['estudiante_activo']
+            "id_libro" => $est['id_libro'],
+            "titulo" => $est['titulo'],
+            "isbn" => $est['ISBN'],
+            "subtitulo" => $est['subtitulo'],
+            "resumen" => $est['resumen']
         );
     }
 
@@ -108,17 +108,22 @@ if (isset($_POST['buscar'])) {
 
 if (isset($_POST['buscarId'])) {
 
-    $idEstudiante = $_POST['id_estudiante'];
+    $idLibro = $_POST['id_libro'];
 
-    $est = $library->estudiante[$idEstudiante];
+    $est = $library->libro[$idLibro];
+    
+    $autor = $library->autor[$est['id_autor']];
 
     $json_arr = array(
-        "nombre" => $est['estudiante_nombre'],
-        "apellido" => $est['estudiante_apellido'],
-        "matricula" => $est['matricula'],
-        "estado" => $est['estudiante_activo'],
-        "email" => $est['estudiante_activo']
+        "id_libro" => $est['id_libro'],
+        "titulo" => $est['titulo'],
+        "isbn" => $est['ISBN'],
+        "subtitulo" => $est['subtitulo'],
+        "resumen" => $est['resumen'],
+        "autor" => $autor['autor_nombre']
     );
+    
+    // $est['id_autor']//
 
     echo json_encode($json_arr);
 }
