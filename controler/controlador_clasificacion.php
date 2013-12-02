@@ -91,6 +91,21 @@ if (isset($_POST['buscar'])) {
     echo json_encode($array);
 }
 
+if (isset($_POST['findAllClas'])) {
+
+    $clasificaciones = $library->clasificacion();
+
+    $array = array();
+    foreach ($clasificaciones as $clasificacion) {
+        $array[] = array(
+            "id_clasificacion" => $clasificacion['id_clasificacion'],
+            "descripcion" => $clasificacion['clasificacion_descripcion']
+        );
+    }
+
+    echo json_encode($array);
+}
+
 if (isset($_POST['buscarId'])) {
 
     $idClasificacion = $_POST['id_clasificacion'];

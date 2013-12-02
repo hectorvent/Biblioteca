@@ -9,6 +9,7 @@
         <script src="resources/js/jquery-1.9.1.js" ></script>
         <script src="resources/js/jquery-ui-1.10.3.custom.js"></script>
         <script src="resources/js/alertify.min.js"></script>
+        <script src="resources/js/jquery.preimage.js"></script>
 
 
         <title>JadeSoft ** Biblioteca</title>
